@@ -8,108 +8,102 @@ To write a program to predict the marks scored by a student using the simple lin
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. Gather data consisting of two variables. Input- a factor that affects the marks and Output - the marks scored by students
-2. Plot the data points on a graph where x-axis represents the input variable and y-axis represents the marks scored
-3. Define and initialize the parameters for regression model: slope controls the steepness and intercept represents where the line crsses the y-axis
-4. Use the linear equation to predict marks based on the input Predicted Marks = m.(hours studied) + b
-5. for each data point calculate the difference between the actual and predicted marks
-6. Adjust the values of m and b to reduce the overall error. The gradient descent algorithm helps update these parameters based on the calculated error
-7. Once the model parameters are optimized, use the final equation to predict marks for any new input data
+1. import the needed packages. 
+2. Assigning hours to x and scores to y.
+3. Plot the scatter plot.
+4. Use mse,rmse,mae formula to find the values.
 
 ## Program:
+```
+/*
 Program to implement the simple linear regression model for predicting the marks scored.
-
-Developed by: Roshan G
-
+Developed by:Roshan G
 RegisterNumber: 212223040176
+*/
+```
 ```python
+# IMPORT REQUIRED PACKAGE
 import pandas as pd
 import numpy as np
+from sklearn.metrics import mean_absolute_error,mean_squared_error
 import matplotlib.pyplot as plt
-#import libraries to find mae, mse
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import mean_squared_error
-
-#read csv file
-df= pd.read_csv('data.csv')
-
-#displaying the content in datafile
-df.head()
-df.tail()
-
-# Segregating data to variables
-X=df.iloc[:,:-1].values
-X
-y=df.iloc[:,-1].values
-y
-
-#splitting train and test data
+dataset=pd.read_csv('student_scores.csv')
+print(dataset)
+# READ CSV FILES
+dataset=pd.read_csv('student_scores.csv')
+print(dataset.head())
+print(dataset.tail())
+# COMPARE DATASET
+x=dataset.iloc[:,:-1].values
+print(x)
+y=dataset.iloc[:,1].values
+print(y)
+# PRINT PREDICTED VALUE
 from sklearn.model_selection import train_test_split
-X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=1/2,random_state=0)
-
-#import linear regression model and fit the model with the data
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=1/3,random_state=0)
 from sklearn.linear_model import LinearRegression
-regressor=LinearRegression()
-regressor.fit(X_train,y_train)
-
-#displaying predicted values
-y_pred=regressor.predict(X_test)
-y_pred
-
-#displaying actual values
-y_test
-
-#graph plot for training data
-import matplotlib.pyplot as plt
-plt.scatter(X_train,y_train,color='red')
-plt.plot(X_train,regressor.predict(X_train),color='blue')
-plt.title("Hours vs Scores (Training Set)")
+reg=LinearRegression()
+reg.fit(x_train,y_train)
+y_pred = reg.predict(x_test)
+print(y_pred)
+print(y_test)
+# GRAPH PLOT FOR TRAINING SET
+plt.scatter(x_train,y_train,color='purple')
+plt.plot(x_train,reg.predict(x_train),color='black')
+plt.title("Hours vs Scores(Training set)")
 plt.xlabel("Hours")
 plt.ylabel("Scores")
-
-#graph plot for test data
-plt.scatter(X_test,y_test,color='red')
-plt.plot(X_test,regressor.predict(X_test),color='blue')
-plt.title("Hours vs Scores (Testing Set)")
+plt.show()
+# GRAPH PLOT FOR TESTING SET
+plt.scatter(x_test,y_test,color='red')
+plt.plot(x_train,reg.predict(x_train),color='black')
+plt.title("Hours vs Scores(Testing set)")
 plt.xlabel("Hours")
 plt.ylabel("Scores")
-
-#find mae,mse,rmse
-mse=mean_squared_error(y_test,y_pred)
-print('MSE = ',mse)
+plt.show()
+# PRINT THE ERROR
+mse=mean_absolute_error(y_test,y_pred)
+print('Mean Square Error = ',mse)
 mae=mean_absolute_error(y_test,y_pred)
-print('MAE = ',mae)
+print('Mean Absolute Error = ',mae)
 rmse=np.sqrt(mse)
-print('RMSE = ',rmse)
+print("Root Mean Square Error = ",rmse)
+
 ```
 
 ## Output:
-### Head Values
-![alt text](<Images/Screenshot 2024-08-16 154352-1.png>)
 
-### Tail Values
-![alt text](<Images/Screenshot 2024-08-16 154419-1.png>)
+To Read Head and Tail Files
 
-### X Values
-![alt text](<Images/Screenshot 2024-08-16 152702.png>)
+![image](https://github.com/HIRU-VIRU/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/145972122/5968514c-05e2-4d71-b132-b0acea5efd47)
 
-### y Values
-![alt text](<Images/Screenshot 2024-08-16 153116-1.png>)
+![image](https://github.com/HIRU-VIRU/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/145972122/ea9cb89a-f4b8-473d-84b8-1f92b2ee64a2)
 
-### Predicted Values
-![alt text](<Screenshot 2024-08-16 161908.png>)
 
-### Actual Values
-![alt text](<Images/Screenshot 2024-08-16 153301.png>)
+Compare Dataset
 
-### Training Set
-![alt text](<Images/download (8).png>)
+![image](https://github.com/HIRU-VIRU/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/145972122/9d7409fe-cb21-4727-9bd1-365c85ab9f1a)
 
-### Testing Set
-![alt text](<Images/download (7)-1.png>)
 
-### MSE, MAE and RMSE
-![alt text](<Images/Screenshot 2024-08-16 153958-1.png>)
+Predicted Value
+
+![image](https://github.com/HIRU-VIRU/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/145972122/44b39961-15f3-4ef1-b64f-01bd7c4fff12)
+
+
+
+Graph For Training Set
+![image](https://github.com/HIRU-VIRU/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/145972122/be5ed2ff-790c-4d0d-84c0-a230f9f4d2df)
+
+
+
+Graph For Testing Set
+
+![image](https://github.com/HIRU-VIRU/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/145972122/3871af46-764a-496a-ad7d-39a81d931dee)
+
+
+Error
+
+![image](https://github.com/HIRU-VIRU/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/145972122/b2a0e793-2aef-4ae5-ad28-79ec7f2399be)
 
 
 ## Result:
